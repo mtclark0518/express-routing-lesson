@@ -1,22 +1,12 @@
+
+
 var express = require('express');
-var app     = express();
-var port    = process.env.PORT || 3000;
+var myRouter = require('./routes.js');
+var myBikeRouter = require('./bikeRoutes.js');
+var app = express();
+var port = process.env.PORT || 3000;
+console.log('listening on port ' + port);
 
-app.get('/api/parsetime', function(req, res) {
-  time = new Date();
-  result = {
-    hour: time.getHours(),  
-    minute: time.getMinutes(),  
-    second: time.getSeconds()  
-  };
-
-  res.send(result);
-});
-
-app.get('/api/unixtime', function(req, res) {
-  time = new Date();
-
-  res.send({ unixtime : time.getTime() });
-});
-
+app.use("/api", myRouter);
+app.use('/bicycles', myBikeRouter);
 app.listen(port);
